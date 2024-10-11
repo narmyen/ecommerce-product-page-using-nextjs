@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${kumhSans.className} ${kumhSans.className} antialiased`}>
-        <div className="px-40">{children}</div>
+        <div className="px-60">{children}</div>
       </body>
     </html>
   );
