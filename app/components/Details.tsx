@@ -1,34 +1,50 @@
 'use client'
 import React, { useState } from 'react'
-import { Cart } from './icons/Icon'
+import { Cart, CartOnBtn } from './icons/Icon'
+import { Product } from './interface/interface';
 
-function Details() {
+interface DetailsProps {
+  product?: Product;
+  handleSend: (amountProduct: number) => void;
+}
+
+function Details({ product, handleSend }: DetailsProps) {
   const [numberOfProduct, setNumberOfProduct] = useState<number>(0);
 
   return (
-    <div className=' w-full text-xl p-14'>
-      <h3 className='uppercase text-xl font-semibold text-darkGrayishBlue pb-4'>SNEAKER COMPANY</h3>
-      <h1 className='capitalize text-5xl font-bold text-veryDarkBlue pb-6'>Fall Limited Sneakers</h1>
-      <p className='pb-4 text-xl text-darkGrayishBlue'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga explicabo ab illo adipisci ipsum beatae qui culpa itaque facilis rerum.</p>
+    <div className=' w-full p-8 '>
+      <h3 className='uppercase font-semibold text-darkGrayishBlue pb-4'>{product && product.product_owner}</h3>
+      <h1 className='capitalize text-3xl font-bold text-veryDarkBlue pb-6'>{product && product.product_name}</h1>
+      <p className='pb-4 text-darkGrayishBlue'>{product && product.product_description}</p>
       <div className='flex items-start gap-4'>
         <div>
-          <p className='font-bold text-2xl'>$150.00</p>
-          <p className='line-through decoration-[1.5px] decoration-darkGrayishBlue/70'>$255.00</p>
+          <p className='font-bold text-xl'>${product && product.product_sale_price ? (product.product_price - product.product_sale_price).toFixed(2) + "$" : product && product.product_price.toFixed(2) + "$"}</p>
+          <p className='line-through decoration-[1.5px] decoration-darkGrayishBlue/70'>${product && product.product_price.toFixed(2) + "$"}</p>
         </div>
-        <div className='cursor-default bg-veryDarkBlue rounded-md px-[1rem] py-[0.5rem] text-white font-bold' >
-          <p>-50%</p>
+        <div className='cursor-default px-[.6rem] py-[0.2rem] bg-veryDarkBlue rounded-md  text-white font-bold' >
+          <p>
+            {product && product.product_sale_price
+              ? ((product.product_sale_price / product.product_price) * 100).toFixed(2) + '%'
+              : ''}
+          </p>
+
         </div>
       </div>
 
-      <div className='flex gap-8 pt-4'>
-        <div className='flex px-[1rem] py-[.5rem] items-center gap-8 bg-lightGrayishBlue font-bold shadow-md'>
-          <div onClick={() => { setNumberOfProduct(numberOfProduct - 1) }} className='hover:text-orange cursor-pointer'>-</div>
-          <div>{numberOfProduct}</div>
-          <div onClick={() => { setNumberOfProduct(numberOfProduct + 1) }} className='hover:text-orange cursor-pointer'>+</div>
+      <div className='flex item-center justify-between gap-8 mt-4 select-none'>
+        <div className='flex  rounded-md  items-center bg-lightGrayishBlue font-bold shadow-md'>
+          <div onClick={() => { if (numberOfProduct > 0) { setNumberOfProduct(numberOfProduct - 1) } }} className='hover:text-orange cursor-pointer select-none h-full w-full px-[1rem] py-[.5rem]'>-</div>
+          <div className='px-6'>{numberOfProduct}</div>
+          <div onClick={() => { setNumberOfProduct(numberOfProduct + 1) }} className='hover:text-orange cursor-pointer h-full w-full px-[1rem] py-[.5rem]'>+</div>
         </div>
-        <div className='cursor-pointer text-veryDarkBlue font-bold flex gap-1 items-center justify-center px-[3rem] py-[.5rem] rounded-md bg-orange/50 shadow-md hover:shadow-none'>
-          <div><Cart /></div>
-          <p>Add to Cart</p>
+        <div
+          className='cursor-pointer text-veryDarkBlue font-bold flex items-center px-4 gap-2  rounded-md bg-orange/50 shadow-md hover:shadow-none select-none'
+          onClick={() => { handleSend(numberOfProduct) }}
+        >
+          <div className=''><CartOnBtn /></div>
+          <div>
+            <p>Add to Cart</p>
+          </div>
         </div>
       </div>
 

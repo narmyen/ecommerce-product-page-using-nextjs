@@ -1,21 +1,43 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import ProfileImage from '../components/images/image-avatar.png';
 
 import { Cart, Logo } from './icons/Icon'
 import CartComponent from './Cart';
+import { Product, ProductToCart } from './interface/interface';
 
-function Nav() {
-  const [onProfileClick, setOnProfileClick] = useState<boolean>(false);
+interface NavProps {
+  productAdded?: Product;
+  amountOfProduct?: number;
+}
+
+function Nav({ productAdded, amountOfProduct }: NavProps) {
+  const [onCartClick, setOnCartClick] = useState<boolean>(false);
+  const [newProduct, setNewProduct] = useState<ProductToCart>();
 
   const handleCartDropDown = () => {
-    setOnProfileClick(!onProfileClick)
+    setOnCartClick(!onCartClick)
   }
 
+  useEffect(() => {
+    console.log("Product Added:", productAdded);
+    console.log("Amount of Product:", amountOfProduct);
+
+    if (productAdded && typeof amountOfProduct === "number") {
+      const updatedProduct: ProductToCart = {
+        product: productAdded,
+        amount: amountOfProduct,
+      };
+      setNewProduct(updatedProduct);
+    }
+  }, [productAdded, amountOfProduct]);
+
+
+
   return (
-    <div className='shadow-md px-8'>
+    <div className='shadow-md px-8 relative'>
       <div className='flex items-center justify-between'>
         <ul className='flex items-center gap-4 cursor-pointer text-darkGrayishBlue'>
           <li className='mr-8 hover:text-veryDarkBlue py-8'><div><Logo /></div></li>
@@ -32,7 +54,7 @@ function Nav() {
           >
             <Cart />
           </div>
-          <div className='relative'>
+          <div className=''>
             <div
               className='cursor-pointer border-[3px] border-transparent hover:border-orange rounded-full transition-all duration-300'
             >
@@ -43,17 +65,16 @@ function Nav() {
                 height={50}
               />
 
-              {onProfileClick && (
-                <div className=' cursor-default absolute -bottom-32 -right-8'>
-                  <CartComponent />
-                </div>
-              )}
-
             </div>
 
           </div>
         </div>
       </div>
+      {onCartClick && (
+        <div className='z-99 cursor-default absolute top-16 right-0'>
+          <CartComponent productWithAmount={newProduct} />
+        </div>
+      )}
     </div>
   )
 }
