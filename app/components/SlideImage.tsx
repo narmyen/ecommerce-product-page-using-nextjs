@@ -36,9 +36,9 @@ function SlideImage({ product }: SlideImageProps) {
   const selectedData = products[0];
 
   return (
-    <div>
+    <div className='max-[848px]:px-20 max-[740px]:px-0'>
       {/* Display the selected image */}
-      <div className='w-full flex items-center justify-center'>
+      <div className='w-full  flex items-center justify-center'>
         {selectedData && (
           <Image
             src={selectedData.product_image[selectedImageId]}
@@ -58,19 +58,20 @@ function SlideImage({ product }: SlideImageProps) {
           {selectedData.product_image.map((image, idx) => (
             <li
               key={idx}
-              className={`${selectedImageId === idx ? 'border-orange opacity-40' : ''} border-2 rounded-[.7rem] overflow-hidden border-transparent cursor-pointer hover:opacity-40 transition-all duration-300`}
+              className={`${selectedImageId === idx ? 'border-orange' : ''} border-[3px] rounded-[.7rem] overflow-hidden border-transparent cursor-pointer hover:opacity-40 transition-all duration-300`}
               onClick={() => setSelectedImageId(idx)}
             >
-              <Image
-                src={selectedData.product_image[idx]}
-                height={65}
-                width={65}
-                alt={`Thumbnail ${idx + 1}`}
-                style={{
-                  borderRadius: ".5rem",
-                }}
-              />
+              <div className={`${selectedImageId === idx ? 'opacity-40' : ''} relative w-[70px] h-[70px] max-[740px]:h-[80px] max-[740px]:w-[80px] `}>
+                <Image
+                  src={selectedData.product_image[idx]}
+                  layout='fill' // Fills the parent container
+                  alt={`Thumbnail ${idx + 1}`}
+                  className="rounded-[.5rem] object-cover" // Ensures the image fills the space while maintaining aspect ratio
+                />
+              </div>
+
             </li>
+
           ))}
         </ul>
       </div>

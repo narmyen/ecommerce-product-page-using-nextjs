@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 import Image from "next/image";
 import ProfileImage from '../components/images/image-avatar.png';
 
-import { Cart, Logo } from './icons/Icon'
+import { Cart, Logo, MenuIcon } from './icons/Icon'
 import CartComponent from './Cart';
 import { Product, ProductToCart } from './interface/interface';
+import HambergurNavBar from './HambergurNavBar';
 
 interface NavProps {
   productAdded?: Product;
@@ -16,6 +17,7 @@ interface NavProps {
 function Nav({ productAdded, amountOfProduct }: NavProps) {
   const [onCartClick, setOnCartClick] = useState<boolean>(false);
   const [newProduct, setNewProduct] = useState<ProductToCart>();
+  const [isHamVisible, setIsHamVisible] = useState<boolean>(false);
 
   const handleCartDropDown = () => {
     setOnCartClick(!onCartClick)
@@ -34,19 +36,34 @@ function Nav({ productAdded, amountOfProduct }: NavProps) {
     }
   }, [productAdded, amountOfProduct]);
 
-
+  const handleOnClickHamNavbar = () => {
+    setIsHamVisible(!isHamVisible)
+  }
 
   return (
     <div className='shadow-md px-8 relative'>
       <div className='flex items-center justify-between'>
-        <ul className='flex items-center gap-4 cursor-pointer text-darkGrayishBlue'>
-          <li className='mr-8 hover:text-veryDarkBlue py-8'><div><Logo /></div></li>
-          <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Colection</li>
-          <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Men</li>
-          <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Women</li>
-          <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>About</li>
-          <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Contact</li>
-        </ul>
+        <div className='flex'>
+          <div className='flex items-center gap-4 mr-8 hover:text-veryDarkBlue py-8'>
+            <div
+              className='hidden max-mobile:block cursor-pointer'
+              onClick={() => {
+                setIsHamVisible(!isHamVisible)
+              }}
+            >
+              <MenuIcon />
+            </div>
+            <div><Logo /></div>
+          </div>
+          <ul className='flex items-center gap-4 cursor-pointer text-darkGrayishBlue max-mobile:hidden'>
+            <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Colection</li>
+            <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Men</li>
+            <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Women</li>
+            <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>About</li>
+            <li className='hover:text-veryDarkBlue hover:pb-2 border-2 border-transparent hover:border-b-2 hover:border-b-orange transition-all'>Contact</li>
+          </ul>
+        </div>
+
         <div className='flex gap-4 items-center '>
           <div
             className='cursor-pointer'
@@ -56,7 +73,7 @@ function Nav({ productAdded, amountOfProduct }: NavProps) {
           </div>
           <div className=''>
             <div
-              className='cursor-pointer border-[3px] border-transparent hover:border-orange rounded-full transition-all duration-300'
+              className='h-[50px] w-[50px] cursor-pointer border-[3px] border-transparent hover:border-orange rounded-full transition-all duration-300'
             >
               <Image
                 src={ProfileImage}
@@ -75,6 +92,9 @@ function Nav({ productAdded, amountOfProduct }: NavProps) {
           <CartComponent productWithAmount={newProduct} />
         </div>
       )}
+      <div className={`${isHamVisible ? "hidden" : "fixed z-50"}`}>
+        <HambergurNavBar onClose={handleOnClickHamNavbar} />
+      </div>
     </div>
   )
 }

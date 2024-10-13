@@ -12,7 +12,7 @@ function Details({ product, handleSend }: DetailsProps) {
   const [numberOfProduct, setNumberOfProduct] = useState<number>(0);
 
   return (
-    <div className=' w-full p-8 '>
+    <div className=' w-full p-8 max-[848px]:px-20 max-[740px]:px-0'>
       <h3 className='uppercase font-semibold text-darkGrayishBlue pb-4'>{product && product.product_owner}</h3>
       <h1 className='capitalize text-3xl font-bold text-veryDarkBlue pb-6'>{product && product.product_name}</h1>
       <p className='pb-4 text-darkGrayishBlue'>{product && product.product_description}</p>
@@ -38,7 +38,7 @@ function Details({ product, handleSend }: DetailsProps) {
           <div onClick={() => { setNumberOfProduct(numberOfProduct + 1) }} className='hover:text-orange cursor-pointer h-full w-full px-[1rem] py-[.5rem]'>+</div>
         </div>
         <div
-          className='cursor-pointer text-veryDarkBlue font-bold flex items-center px-4 gap-2  rounded-md bg-orange/50 shadow-md hover:shadow-none select-none'
+          className='cursor-pointer text-veryDarkBlue font-bold flex items-center px-4 gap-2  rounded-md bg-orange hover:bg-orange/60 shadow-md hover:shadow-none select-none'
           onClick={() => { handleSend(numberOfProduct) }}
         >
           <div className=''><CartOnBtn /></div>

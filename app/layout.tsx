@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Sans_Thai, Kumbh_Sans } from "next/font/google";
+import { Kumbh_Sans } from "next/font/google";
 import "./globals.css";
 
 const kumhSans = Kumbh_Sans({
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${kumhSans.className} ${kumhSans.className} antialiased`}>
-        <div className="px-60">{children}</div>
+        <div className="px-[200px] max-[1443px]:px-20 max-[1200px]:px-10 max-[1112px]:px-0 max-[1032px]:text-[12px] transition-all duration-300">{children}</div>
       </body>
     </html>
   );

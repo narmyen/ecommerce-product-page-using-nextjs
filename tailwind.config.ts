@@ -21,6 +21,9 @@ const config: Config = {
       fontSize: {
         base: '16px',
       },
+      screens: {
+        mobile: '690px'
+      }
     },
   },
   plugins: [],

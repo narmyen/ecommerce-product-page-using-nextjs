@@ -36,7 +36,7 @@ function ShowDetail({ sendProduct, sendAmountOfProduct }: ShowDetailProps) {
   }, [amountOfProduct]);
 
   return (
-    <div className="flex flex-row justify-center items-center mt-8 gap-8 px-32 w-full h-full">
+    <div className="flex max-[848px]:flex-col  flex-row justify-center items-center mt-8 gap-8 max-[1032px]:gap-2 px-32 max-[848px]:px-32 max-[977px]:px-16 w-full h-full">
       <SlideImage product={handleReceiveProductInfo} />
       <Details product={product} handleSend={handleAddtoCart} />
     </div>
